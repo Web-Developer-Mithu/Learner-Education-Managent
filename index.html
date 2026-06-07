@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark" data-lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Soft Limited – Shikkhaloy Education System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & TOKENS ────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#FF3A5C;
+  --red-dim:#cc2e49;
+  --gold:#F0A500;
+  --blue:#1A56DB;
+  --blue-dim:#1040a8;
+  --teal:#00C4B4;
+
+  /* dark theme */
+  --bg:#0A0A0F;
+  --bg2:#111118;
+  --bg3:#18181f;
+  --surface:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.08);
+  --text:#F0F0F5;
+  --muted:#888899;
+  --heading-font:'Bebas Neue',sans-serif;
+  --body-font:'Outfit',sans-serif;
+  --bangla-font:'Tiro Bangla',serif;
+  --radius:16px;
+  --glow:0 0 40px rgba(255,58,92,0.18);
+}
+[data-theme="light"]{
+  --bg:#F5F5FA;
+  --bg2:#EBEBF2;
+  --bg3:#DEDEE8;
+  --surface:rgba(0,0,0,0.04);
+  --border:rgba(0,0,0,0.08);
+  --text:#0A0A1A;
+  --muted:#55556A;
+  --glow:0 0 40px rgba(255,58,92,0.1);
+}
+
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:var(--body-font);
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background 0.4s,color 0.4s;
+}
+.bn{font-family:var(--bangla-font)}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ── NOISE OVERLAY ─────────────────────────────────────── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:0.4;
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,5vw,3rem);
+  height:64px;
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background 0.4s;
+}
+[data-theme="light"] nav{background:rgba(245,245,250,0.88)}
+.nav-logo{
+  display:flex;align-items:center;gap:0.6rem;
+  font-family:var(--heading-font);font-size:1.4rem;letter-spacing:1px;
+  color:var(--red);
+}
+.nav-logo span{color:var(--text);font-size:0.8rem;letter-spacing:2px;font-family:var(--body-font);font-weight:600;text-transform:uppercase}
+.nav-links{display:flex;gap:0.25rem;align-items:center}
+.nav-links a{
+  padding:0.35rem 0.75rem;border-radius:8px;font-size:0.78rem;font-weight:500;
+  color:var(--muted);transition:color 0.2s,background 0.2s;letter-spacing:0.5px;text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--text);background:var(--surface)}
+.nav-controls{display:flex;gap:0.5rem;align-items:center}
+.btn-ctrl{
+  border:1px solid var(--border);background:var(--surface);color:var(--text);
+  padding:0.35rem 0.85rem;border-radius:8px;cursor:pointer;font-size:0.78rem;
+  font-family:var(--body-font);font-weight:600;letter-spacing:0.5px;
+  transition:all 0.2s;
+}
+.btn-ctrl:hover{border-color:var(--red);color:var(--red)}
+
+/* ── HERO ──────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;
+  padding:7rem 2rem 4rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+}
+.hero-bg-circle{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:0.12;
+}
+.hbc1{width:600px;height:600px;background:var(--red);top:-200px;left:-150px}
+.hbc2{width:500px;height:500px;background:var(--blue);bottom:-100px;right:-100px}
+.hbc3{width:300px;height:300px;background:var(--gold);top:40%;left:50%;transform:translate(-50%,-50%)}
+.hero-tag{
+  display:inline-block;
+  border:1px solid var(--red);
+  color:var(--red);
+  padding:0.3rem 1rem;
+  border-radius:100px;
+  font-size:0.72rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.8s 0.2s both;
+}
+.hero-title{
+  font-family:var(--heading-font);
+  font-size:clamp(3.5rem,9vw,8rem);
+  line-height:0.95;
+  letter-spacing:2px;
+  animation:fadeUp 0.8s 0.35s both;
+}
+.hero-title .accent{color:var(--red)}
+.hero-title .accent2{color:var(--gold)}
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.25rem);
+  color:var(--muted);
+  max-width:600px;
+  margin:1.5rem auto;
+  line-height:1.7;
+  font-weight:300;
+  animation:fadeUp 0.8s 0.5s both;
+}
+.hero-sub .bn{font-size:0.95em}
+.hero-cta{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 0.8s 0.65s both;
+}
+.btn-primary{
+  background:var(--red);color:#fff;padding:0.85rem 2rem;
+  border-radius:12px;font-weight:700;font-size:0.9rem;
+  transition:transform 0.2s,box-shadow 0.2s;letter-spacing:0.5px;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,58,92,0.4)}
+.btn-outline{
+  border:1px solid var(--border);color:var(--text);padding:0.85rem 2rem;
+  border-radius:12px;font-weight:500;font-size:0.9rem;
+  transition:all 0.2s;background:var(--surface);
+}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.hero-stats{
+  display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;
+  margin-top:3.5rem;
+  animation:fadeUp 0.8s 0.8s both;
+}
+.hero-stat{text-align:center}
+.hero-stat-num{
+  font-family:var(--heading-font);font-size:2.5rem;color:var(--red);
+  letter-spacing:1px;line-height:1;
+}
+.hero-stat-label{font-size:0.72rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:0.25rem}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.4rem;
+  color:var(--muted);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+  animation:bounce 2s infinite;
+}
+.scroll-hint::after{
+  content:'';width:1px;height:40px;background:linear-gradient(to bottom,var(--red),transparent);
+}
+
+/* ── SECTION SHELL ─────────────────────────────────────── */
+section{padding:6rem clamp(1rem,5vw,5rem)}
+.section-tag{
+  display:inline-block;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;
+  font-weight:700;color:var(--red);margin-bottom:0.75rem;
+}
+.section-title{
+  font-family:var(--heading-font);
+  font-size:clamp(2.2rem,5vw,4rem);
+  line-height:1;letter-spacing:1px;
+  margin-bottom:1rem;
+}
+.section-desc{
+  font-size:1rem;color:var(--muted);max-width:560px;line-height:1.8;margin-bottom:3rem;
+}
+.section-title .accent{color:var(--red)}
+.container{max-width:1200px;margin:0 auto}
+
+/* ── ABOUT ─────────────────────────────────────────────── */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);line-height:1.9;margin-bottom:1rem;font-size:0.95rem}
+.about-pillars{display:flex;flex-direction:column;gap:1rem}
+.pillar{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1.25rem;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);transition:border-color 0.2s;
+}
+.pillar:hover{border-color:var(--red)}
+.pillar-icon{font-size:1.5rem;flex-shrink:0}
+.pillar h4{font-size:0.9rem;font-weight:700;margin-bottom:0.25rem}
+.pillar p{font-size:0.8rem;color:var(--muted)}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.stat-card{
+  background:var(--red);color:#fff;padding:1.5rem;border-radius:var(--radius);text-align:center;
+}
+.stat-card.blue{background:var(--blue)}
+.stat-card.teal{background:var(--teal);color:#111}
+.stat-card.gold{background:var(--gold);color:#111}
+.stat-card-num{font-family:var(--heading-font);font-size:2.2rem;letter-spacing:1px}
+.stat-card-label{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85;margin-top:0.2rem}
+
+/* ── LEARNER ERP ────────────────────────────────────────── */
+#learner{position:relative;overflow:hidden}
+.learner-bg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(26,86,219,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.learner-center-badge{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dim));
+  color:#fff;border-radius:50%;width:140px;height:140px;
+  font-size:2.5rem;text-align:center;margin:0 auto 2rem;
+  box-shadow:0 0 40px rgba(26,86,219,0.4);
+  font-family:var(--heading-font);letter-spacing:1px;
+}
+.learner-center-badge span{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;opacity:0.85}
+.flower-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+  max-width:900px;margin:0 auto;
+}
+.flower-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;display:flex;flex-direction:column;gap:0.5rem;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.flower-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(26,86,219,0.1),transparent);
+  transition:opacity 0.3s;
+}
+.flower-card:hover::before{opacity:1}
+.flower-card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.flower-num{
+  font-family:var(--heading-font);font-size:2.5rem;color:var(--blue);opacity:0.3;
+  line-height:1;margin-bottom:0.25rem;
+}
+.flower-card h4{font-size:1rem;font-weight:700}
+.flower-card h4 .bn{font-size:0.9em}
+.flower-card p{font-size:0.8rem;color:var(--muted);line-height:1.6}
+
+/* ── ATTENDANCE ─────────────────────────────────────────── */
+#attendance{background:var(--bg2)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.compare-col{border-radius:var(--radius);overflow:hidden}
+.compare-header{
+  padding:1rem 1.5rem;font-weight:700;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;
+}
+.compare-header.bad{background:#3a1820;color:#ff7a8a}
+.compare-header.good{background:#0e2e2a;color:var(--teal)}
+.compare-body{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius)}
+.compare-item{
+  padding:0.85rem 1.25rem;border-bottom:1px solid var(--border);
+  font-size:0.82rem;color:var(--muted);line-height:1.5;display:flex;gap:0.75rem;align-items:flex-start;
+}
+.compare-item:last-child{border-bottom:none}
+.compare-item .icon{flex-shrink:0;font-size:0.9rem;margin-top:2px}
+.hazira-flow{
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.5rem;
+}
+.flow-step{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.25rem 1.5rem;text-align:center;min-width:160px;flex:1;max-width:200px;
+  position:relative;transition:border-color 0.2s;
+}
+.flow-step:hover{border-color:var(--teal)}
+.flow-step-icon{font-size:1.75rem;margin-bottom:0.5rem}
+.flow-step h5{font-size:0.82rem;font-weight:700}
+.flow-step p{font-size:0.72rem;color:var(--muted);margin-top:0.2rem;line-height:1.5}
+.flow-arrow{display:flex;align-items:center;color:var(--teal);font-size:1.25rem;padding-top:0.5rem}
+
+/* ── FEES ───────────────────────────────────────────────── */
+#fees{position:relative}
+.fees-highlight{
+  background:linear-gradient(135deg,rgba(26,86,219,0.08),rgba(0,196,180,0.06));
+  border:1px solid rgba(26,86,219,0.2);
+  border-radius:var(--radius);padding:2rem;margin-bottom:2.5rem;
+}
+.fees-highlight p{font-size:0.9rem;color:var(--text);line-height:1.8}
+.fees-highlight strong{color:var(--blue)}
+.fees-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
+.fees-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;transition:all 0.3s;
+}
+.fees-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.fees-card-icon{font-size:1.75rem;margin-bottom:0.75rem}
+.fees-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.4rem}
+.fees-card p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* ── RESULT ─────────────────────────────────────────────── */
+#result{background:var(--bg2)}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.result-features{display:flex;flex-direction:column;gap:0.75rem}
+.result-feature{
+  display:flex;gap:0.75rem;align-items:flex-start;
+  padding:0.75rem;border-radius:10px;transition:background 0.2s;
+}
+.result-feature:hover{background:var(--surface)}
+.result-feature .icon{
+  background:linear-gradient(135deg,var(--red),var(--red-dim));
+  color:#fff;border-radius:8px;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;
+}
+.result-feature h5{font-size:0.85rem;font-weight:700;margin-bottom:0.15rem}
+.result-feature p{font-size:0.76rem;color:var(--muted);line-height:1.5}
+.report-card-demo{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;
+}
+.rcd-header{
+  background:var(--red);color:#fff;padding:0.75rem 1rem;
+  font-size:0.75rem;font-weight:700;letter-spacing:1px;text-align:center;text-transform:uppercase;
+}
+.rcd-row{
+  display:flex;justify-content:space-between;padding:0.5rem 1rem;
+  border-bottom:1px solid var(--border);font-size:0.78rem;
+}
+.rcd-row:last-child{border-bottom:none}
+.rcd-row .label{color:var(--muted)}
+.rcd-row .val{font-weight:600}
+.rcd-row .val.pass{color:#4ade80}
+.rcd-row .val.fail{color:var(--red)}
+.rcd-row .val.gold{color:var(--gold)}
+
+/* ── WEBSITE ────────────────────────────────────────────── */
+#website{position:relative;overflow:hidden}
+.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2rem}
+.template-card{
+  border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);
+  transition:all 0.3s;background:var(--bg3);
+}
+.template-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3)}
+.template-img{
+  height:140px;background:linear-gradient(135deg,#1a3a7a,#0d2247);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:rgba(255,255,255,0.2);font-family:var(--heading-font);font-size:3rem;
+  letter-spacing:2px;color:rgba(255,255,255,0.1);
+  position:relative;overflow:hidden;
+}
+.template-img .tpl-label{
+  position:absolute;bottom:0.5rem;left:0.75rem;
+  background:var(--blue);color:#fff;font-size:0.65rem;font-family:var(--body-font);
+  font-weight:700;letter-spacing:1px;padding:0.15rem 0.5rem;border-radius:4px;text-transform:uppercase;
+}
+.template-info{padding:1rem 1.25rem}
+.template-info h4{font-size:0.85rem;font-weight:700;margin-bottom:0.25rem}
+.template-info p{font-size:0.75rem;color:var(--muted)}
+.vs-table{
+  width:100%;border-collapse:collapse;margin-top:1.5rem;
+  background:var(--surface);border-radius:var(--radius);overflow:hidden;
+}
+.vs-table th{
+  background:var(--blue);color:#fff;padding:0.85rem 1rem;
+  font-size:0.78rem;letter-spacing:1px;text-align:left;text-transform:uppercase;
+}
+.vs-table td{
+  padding:0.75rem 1rem;border-bottom:1px solid var(--border);
+  font-size:0.82rem;color:var(--muted);vertical-align:top;line-height:1.5;
+}
+.vs-table tr:last-child td{border-bottom:none}
+.vs-table td:first-child{color:var(--text);font-weight:500;width:40%}
+
+/* ── COMING SOON ────────────────────────────────────────── */
+#pro{
+  background:linear-gradient(135deg,#0d1f5e,#0a0a1a);
+  text-align:center;padding:6rem 2rem;
+}
+.pro-badge{
+  display:inline-block;background:var(--gold);color:#111;
+  font-weight:800;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;
+  padding:0.35rem 1rem;border-radius:100px;margin-bottom:1.5rem;
+}
+.dashboard-preview{
+  max-width:900px;margin:3rem auto 0;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);
+}
+.db-topbar{
+  background:#1a2540;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.db-dot{width:10px;height:10px;border-radius:50%}
+.db-dot.r{background:#ff5f57}
+.db-dot.y{background:#febc2e}
+.db-dot.g{background:#28c840}
+.db-title{font-size:0.75rem;color:var(--muted);margin-left:0.5rem;font-weight:600}
+.db-body{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding:1.5rem;
+}
+.db-stat{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;
+}
+.db-stat-num{font-family:var(--heading-font);font-size:1.5rem}
+.db-stat-num.green{color:#4ade80}
+.db-stat-num.blue{color:var(--blue)}
+.db-stat-num.red{color:var(--red)}
+.db-stat-num.orange{color:var(--gold)}
+.db-stat-label{font-size:0.68rem;color:var(--muted);margin-top:0.2rem;letter-spacing:0.5px}
+.db-chart{
+  grid-column:span 4;height:120px;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;align-items:flex-end;gap:6px;padding:1rem;overflow:hidden;
+}
+.db-bar{
+  flex:1;border-radius:4px 4px 0 0;min-height:20px;
+  background:linear-gradient(to top,var(--blue),rgba(26,86,219,0.3));
+  transition:height 0.5s;
+}
+
+/* ── PARTNERS ───────────────────────────────────────────── */
+#partners{background:var(--bg2)}
+.partners-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:2rem;
+}
+.partner-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem 1rem;text-align:center;transition:all 0.2s;
+}
+.partner-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.partner-card .p-icon{font-size:2rem;margin-bottom:0.5rem}
+.partner-card h5{font-size:0.82rem;font-weight:700}
+.partner-card p{font-size:0.72rem;color:var(--muted);margin-top:0.2rem}
+
+/* ── DOCS ───────────────────────────────────────────────── */
+#docs{position:relative}
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:2rem}
+.doc-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem 1.5rem;transition:all 0.3s;text-align:center;
+}
+.doc-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.2)}
+.doc-icon{font-size:2.5rem;margin-bottom:1rem}
+.doc-card h4{font-size:0.95rem;font-weight:700;margin-bottom:0.35rem}
+.doc-card p{font-size:0.78rem;color:var(--muted)}
+.verified-badge{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);
+  color:#4ade80;font-size:0.68rem;padding:0.2rem 0.6rem;border-radius:100px;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:0.5rem;
+}
+
+/* ── SECURITY ───────────────────────────────────────────── */
+#security{background:var(--bg2)}
+.security-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-top:2rem}
+.security-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;transition:all 0.3s;
+}
+.security-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.security-card .sc-icon{font-size:2rem;margin-bottom:0.75rem}
+.security-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.4rem}
+.security-card p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* ── CLOSING ────────────────────────────────────────────── */
+#closing{
+  min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:6rem 2rem;
+  background:var(--bg);position:relative;overflow:hidden;
+}
+.closing-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(255,58,92,0.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+.closing-title{
+  font-family:var(--heading-font);
+  font-size:clamp(4rem,12vw,10rem);
+  line-height:0.9;letter-spacing:2px;
+  animation:fadeUp 0.8s both;
+}
+.closing-title .line2{color:var(--red)}
+.closing-name{
+  font-size:1.1rem;font-weight:300;color:var(--muted);margin-top:2rem;letter-spacing:2px;
+}
+.closing-contact{
+  display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;
+}
+.closing-link{
+  display:flex;align-items:center;gap:0.5rem;
+  background:var(--surface);border:1px solid var(--border);
+  padding:0.6rem 1.25rem;border-radius:10px;font-size:0.85rem;font-weight:500;
+  transition:all 0.2s;
+}
+.closing-link:hover{border-color:var(--red);color:var(--red)}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:2rem;text-align:center;font-size:0.78rem;color:var(--muted);
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes bounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.7s,transform 0.7s}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.7s,transform 0.7s}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+/* ── HAZIRA DEVICE ANIMATION ─────────────────────────────── */
+.hazira-anim-wrap{display:flex;flex-direction:column;gap:2rem}
+.hazira-scene{
+  display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;
+  padding:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+}
+
+/* Device */
+.hazira-device{
+  width:120px;flex-shrink:0;
+  background:linear-gradient(180deg,#1a1a22,#111116);
+  border:2px solid #2a2a35;border-radius:18px;
+  padding:10px 8px 12px;
+  box-shadow:0 0 30px rgba(255,58,92,0.15),inset 0 1px 0 rgba(255,255,255,0.05);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.hd-camera-bar{display:flex;gap:6px;margin-bottom:4px}
+.hd-cam{width:8px;height:8px;border-radius:50%;background:#2a2a35;border:1px solid #3a3a4a;box-shadow:inset 0 0 3px rgba(0,0,0,0.8)}
+.hd-screen{
+  width:100%;background:#0d0d14;border-radius:10px;padding:8px 6px;
+  border:1px solid #2a2a35;min-height:120px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  position:relative;overflow:hidden;
+}
+.hd-scan-ring{
+  width:48px;height:48px;border-radius:50%;
+  border:2px solid var(--teal);border-top-color:transparent;
+  animation:spinRing 1.5s linear infinite;
+  margin-bottom:4px;position:relative;
+}
+.hd-scan-ring::after{
+  content:'';position:absolute;inset:4px;border-radius:50%;
+  border:1px solid rgba(0,196,180,0.3);border-top-color:transparent;
+  animation:spinRing 1s linear infinite reverse;
+}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.hd-face-icon{position:absolute;font-size:1.1rem;animation:fadePulse 2s ease-in-out infinite}
+@keyframes fadePulse{0%,100%{opacity:0.4}50%{opacity:1}}
+.hd-time{font-size:0.6rem;color:var(--teal);font-family:var(--heading-font);letter-spacing:1px}
+.hd-name{font-size:0.52rem;color:var(--text);font-weight:600}
+.hd-status{
+  font-size:0.5rem;color:#4ade80;background:rgba(74,222,128,0.1);
+  padding:2px 6px;border-radius:4px;border:1px solid rgba(74,222,128,0.2);
+  animation:statusPop 0.5s 1.5s both;
+}
+@keyframes statusPop{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+.hd-fingerprint-area{
+  width:32px;height:32px;border-radius:6px;background:#161620;border:1px solid #2a2a35;
+  display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--muted);
+}
+.hd-brand{font-size:0.42rem;color:var(--red);letter-spacing:1px;font-weight:700;text-transform:uppercase}
+
+/* Data pulse line */
+.hazira-pulse-line{display:flex;align-items:center;gap:10px}
+.hpl-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--teal);
+  animation:dotPulse 1.2s ease-in-out infinite;opacity:0;
+}
+.hpl-dot.d2{animation-delay:0.3s}
+.hpl-dot.d3{animation-delay:0.6s}
+@keyframes dotPulse{0%,100%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1)}}
+
+/* Phone */
+.hazira-phone{
+  width:130px;flex-shrink:0;
+  background:#1a1a22;border:2px solid #2a2a35;border-radius:22px;
+  padding:6px 5px 10px;
+  box-shadow:0 0 30px rgba(26,86,219,0.15);
+}
+.hp-notch{width:40px;height:5px;background:#2a2a35;border-radius:3px;margin:0 auto 4px}
+.hp-screen{background:#0d0d14;border-radius:14px;padding:6px;min-height:130px}
+.hp-status-bar{font-size:0.45rem;color:var(--muted);text-align:center;margin-bottom:6px;letter-spacing:0.5px}
+.hp-notif{
+  display:flex;gap:6px;align-items:flex-start;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;padding:5px 6px;margin-bottom:5px;
+  animation:notifSlide 0.5s ease both;
+}
+.hp-notif.n1{animation-delay:1.5s}
+.hp-notif.n2{animation-delay:2.2s}
+@keyframes notifSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.hp-notif-icon{font-size:0.8rem}
+.hp-notif-text{flex:1}
+.hp-notif-title{font-size:0.45rem;font-weight:700;color:var(--text)}
+.hp-notif-body{font-size:0.4rem;color:var(--muted);line-height:1.4;margin-top:1px}
+.hp-notif-time{font-size:0.38rem;color:var(--muted);white-space:nowrap}
+.hp-home-bar{width:35px;height:3px;background:#2a2a35;border-radius:2px;margin:5px auto 0}
+
+/* Attendance Report Mini */
+.att-report-mini{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.arm-header{
+  background:linear-gradient(90deg,#1a3d1a,#0e2e0e);padding:0.75rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;
+}
+.arm-title{font-size:0.78rem;font-weight:700;color:#4ade80}
+.arm-badges{display:flex;gap:0.5rem}
+.arm-badge{font-size:0.65rem;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700}
+.arm-badge.green{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
+.arm-badge.red{background:rgba(255,58,92,0.15);color:var(--red);border:1px solid rgba(255,58,92,0.3)}
+.arm-table{overflow-x:auto}
+.arm-row{display:grid;grid-template-columns:60px 1fr 80px 70px 70px;gap:0.5rem;padding:0.5rem 1rem;font-size:0.72rem;border-bottom:1px solid var(--border);align-items:center}
+.arm-thead{background:rgba(255,255,255,0.04);font-weight:700;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.arm-row .green{color:#4ade80}
+.arm-row .orange{color:var(--gold)}
+.arm-row .red{color:var(--red)}
+.badge-p{color:#4ade80;font-weight:700}
+.badge-l{color:var(--gold);font-weight:700}
+.badge-a{color:var(--red);font-weight:700}
+
+/* ── IMG PLACEHOLDER ─────────────────────────────────────── */
+.img-placeholder-box{
+  border:2px dashed var(--border);border-radius:var(--radius);
+  padding:2rem;text-align:center;
+  background:rgba(255,255,255,0.02);
+  transition:border-color 0.2s;cursor:pointer;
+}
+.img-placeholder-box:hover{border-color:var(--red)}
+.ipb-inner{display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+.ipb-icon{font-size:2.5rem;opacity:0.4}
+.ipb-text{font-size:0.78rem;color:var(--muted);max-width:320px;line-height:1.6}
+
+/* ── PRO DASHBOARD ───────────────────────────────────────── */
+.pro-dashboard{
+  display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+  background:var(--bg2);box-shadow:0 24px 60px rgba(0,0,0,0.4);max-width:100%;
+}
+.pd-sidebar{
+  width:150px;flex-shrink:0;background:#0d0d14;border-right:1px solid var(--border);
+  padding:1rem 0.75rem;display:flex;flex-direction:column;gap:0.25rem;
+}
+.pd-logo{display:flex;align-items:center;gap:0.4rem;font-size:0.75rem;font-weight:700;color:var(--teal);padding:0.5rem 0.5rem 1rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem}
+.pd-nav-item{font-size:0.65rem;padding:0.4rem 0.5rem;border-radius:6px;color:var(--muted);cursor:default;transition:all 0.2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pd-nav-item.active{background:rgba(26,86,219,0.2);color:#7da8ff;border:1px solid rgba(26,86,219,0.3)}
+.pd-main{flex:1;overflow:hidden;padding:1rem;display:flex;flex-direction:column;gap:0.75rem}
+.pd-topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:0.75rem}
+.pd-pill{font-size:0.6rem;padding:0.15rem 0.5rem;border-radius:100px;font-weight:700}
+.pd-pill.green{background:rgba(74,222,128,0.15);color:#4ade80}
+.pd-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem}
+.pd-stat-card{border-radius:10px;padding:0.75rem;border:1px solid rgba(255,255,255,0.06)}
+.pd-stat-num{font-family:var(--heading-font);font-size:1.3rem;letter-spacing:1px;color:#fff}
+.pd-stat-label{font-size:0.55rem;color:rgba(255,255,255,0.6);margin-top:2px}
+.pd-stat-delta{font-size:0.55rem;margin-top:4px;font-weight:700}
+.pd-stat-delta.green{color:#4ade80}
+.pd-stat-delta.red{color:var(--red)}
+.pd-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.pd-chart-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:0.75rem}
+.pd-chart-title{font-size:0.7rem;font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.pd-chart-nums{display:flex;gap:1.5rem;margin-bottom:0.75rem}
+.pd-big-num{font-family:var(--heading-font);font-size:1rem}
+.pd-big-num.green{color:#4ade80}
+.pd-big-num.gold{color:var(--gold)}
+.pd-chart-sub{font-size:0.52rem;color:var(--muted);margin-top:1px}
+.pd-linechart{height:60px;background:rgba(255,255,255,0.02);border-radius:6px;overflow:hidden;position:relative}
+.pd-linechart svg{width:100%;height:100%}
+.pd-due-list{display:flex;flex-direction:column;gap:0.4rem}
+.pd-due-row{display:flex;align-items:center;gap:0.5rem;font-size:0.65rem}
+.pd-avatar{width:22px;height:22px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.55rem;font-weight:700;flex-shrink:0}
+.pd-due-name{font-weight:600;font-size:0.63rem}
+.pd-due-class{font-size:0.52rem;color:var(--muted)}
+.pd-due-amt{margin-left:auto;color:var(--red);font-weight:700;font-size:0.63rem}
+.pd-att-class-row{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:0.75rem}
+.pd-donut-row{display:flex;gap:1.5rem;align-items:center;margin-top:0.5rem}
+.pd-donut-wrap{display:flex;flex-direction:column;align-items:center;gap:0.25rem;position:relative}
+.pd-donut{width:50px;height:50px}
+.pd-donut-arc{stroke-linecap:round;transform-origin:18px 18px;animation:donutSpin 1s ease-out both}
+@keyframes donutSpin{from{stroke-dasharray:0 100}to{}}
+.pd-donut-pct{font-family:var(--heading-font);font-size:0.85rem;color:var(--text)}
+.pd-donut-lbl{font-size:0.55rem;color:var(--muted)}
+
+/* ── TEMPLATE SWITCHER DEMO ──────────────────────────────── */
+.template-switcher-demo{
+  border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg3);
+}
+.tsd-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem 1rem;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:0.5rem;
+}
+.tsd-btns{display:flex;gap:0.4rem}
+.tsd-btn{
+  padding:0.3rem 0.75rem;border-radius:6px;font-size:0.72rem;font-weight:700;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface);color:var(--muted);
+  transition:all 0.2s;font-family:var(--body-font);
+}
+.tsd-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.tsd-preview{transition:all 0.4s}
+.tsd-nav{
+  padding:0.6rem 1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;
+  transition:background 0.4s;
+}
+.tsd-nav-logo{font-size:0.78rem;font-weight:700;color:#fff}
+.tsd-nav-links{display:flex;gap:1rem;font-size:0.65rem;color:rgba(255,255,255,0.7)}
+.tsd-body{padding:0;background:#0a0a0f}
+.tsd-hero{
+  padding:2rem 1.5rem;min-height:120px;display:flex;align-items:center;
+  background-size:cover;transition:background 0.4s;
+  background:linear-gradient(135deg,rgba(0,0,0,0.6),rgba(0,0,0,0.4));
+}
+.tsd-hero-text{display:flex;flex-direction:column;gap:0.5rem}
+.tsd-school-name{font-family:var(--heading-font);font-size:1.2rem;color:#fff;letter-spacing:1px}
+.tsd-school-sub{font-size:0.72rem;color:rgba(255,255,255,0.7)}
+.tsd-hero-btns{display:flex;gap:0.5rem;margin-top:0.25rem}
+.tsd-hero-btn{
+  padding:0.35rem 0.85rem;border-radius:6px;font-size:0.68rem;font-weight:700;
+  background:var(--red);color:#fff;border:none;cursor:pointer;font-family:var(--body-font);
+  transition:background 0.4s;
+}
+.tsd-hero-btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.5);color:#fff}
+.tsd-stats-row{
+  display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.08);
+}
+.tsd-stat{
+  flex:1;padding:0.75rem;text-align:center;border-right:1px solid rgba(255,255,255,0.06);
+}
+.tsd-stat:last-child{border-right:none}
+.tsd-stat-n{font-family:var(--heading-font);font-size:1.1rem;color:#fff;transition:color 0.4s}
+.tsd-stat-l{font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:2px}
+
+/* ── RESPONSIVE UPDATES ──────────────────────────────────── */
+@media(max-width:768px){
+  .hazira-scene{gap:1.5rem}
+  .hazira-pulse-line{display:none}
+  .pro-dashboard{flex-direction:column}
+  .pd-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;overflow-x:auto;gap:0.25rem}
+  .pd-stat-row{grid-template-columns:repeat(2,1fr)}
+  .pd-chart-row{grid-template-columns:1fr}
+  .arm-row{grid-template-columns:50px 1fr 60px 55px 60px;font-size:0.65rem}
+  .tsd-nav-links{display:none}
+  .template-switcher-demo .tsd-header{flex-direction:column;align-items:flex-start}
+}
+  nav{padding:0 1rem}
+  .nav-links{display:none}
+  .about-grid,.compare-grid,.result-grid,.security-grid,.template-grid{grid-template-columns:1fr}
+  .flower-grid{grid-template-columns:1fr 1fr}
+  .db-body{grid-template-columns:1fr 1fr}
+  .db-chart{grid-column:span 2}
+  .about-cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .flower-grid{grid-template-columns:1fr}
+  .about-cards{grid-template-columns:1fr}
+  .hero-stats{gap:1.5rem}
+  .hero-stat-num{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="2" width="9" height="9" rx="2" fill="var(--red)"/>
+      <rect x="13" y="2" width="9" height="9" rx="2" fill="var(--red)" opacity="0.5"/>
+      <rect x="2" y="13" width="9" height="9" rx="2" fill="var(--red)" opacity="0.5"/>
+      <rect x="13" y="13" width="9" height="9" rx="2" fill="var(--red)"/>
+    </svg>
+    SMART SOFT
+    <span>LIMITED</span>
+  </div>
+  <div class="nav-links">
+    <a href="#about" data-bn="পরিচিতি" data-en="About">পরিচিতি</a>
+    <a href="#learner" data-bn="লার্নার ERP" data-en="Learner ERP">লার্নার ERP</a>
+    <a href="#attendance" data-bn="হাজিরা" data-en="Attendance">হাজিরা</a>
+    <a href="#fees" data-bn="ফিস" data-en="Fees">ফিস</a>
+    <a href="#result" data-bn="রেজাল্ট" data-en="Result">রেজাল্ট</a>
+    <a href="#website" data-bn="ওয়েবসাইট" data-en="Website">ওয়েবসাইট</a>
+    <a href="#docs" data-bn="ডকস" data-en="Docs">ডকস</a>
+    <a href="#security" data-bn="সিকিউরিটি" data-en="Security">সিকিউরিটি</a>
+  </div>
+  <div class="nav-controls">
+    <button class="btn-ctrl" id="langToggle">EN</button>
+    <button class="btn-ctrl" id="themeToggle">☀️</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-circle hbc1"></div>
+    <div class="hero-bg-circle hbc2"></div>
+    <div class="hero-bg-circle hbc3"></div>
+  </div>
+  <div class="hero-tag" data-bn="শিক্ষার ডিজিটাল রূপান্তর" data-en="Digital Transformation of Education">শিক্ষার ডিজিটাল রূপান্তর</div>
+  <h1 class="hero-title">
+    SMART<br>
+    <span class="accent">SOFT</span> <span class="accent2">LTD.</span>
+  </h1>
+  <p class="hero-sub">
+    <span class="bn" data-bn="বাংলাদেশের শীর্ষস্থানীয় শিক্ষা প্রযুক্তি প্রতিষ্ঠান। Learner Education System — দেশের সেরা ERP সফটওয়্যার।" data-en="Bangladesh's leading EdTech company. Learner Education System — the nation's premier ERP software.">বাংলাদেশের শীর্ষস্থানীয় শিক্ষা প্রযুক্তি প্রতিষ্ঠান। Learner Education System — দেশের সেরা ERP সফটওয়্যার।</span>
+  </p>
+  <div class="hero-cta">
+    <a href="#learner" class="btn-primary" data-bn="🎓 লার্নার ERP দেখুন" data-en="🎓 Explore Learner ERP">🎓 লার্নার ERP দেখুন</a>
+    <a href="#closing" class="btn-outline" data-bn="📞 যোগাযোগ করুন" data-en="📞 Contact Us">📞 যোগাযোগ করুন</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">5000+</div><div class="hero-stat-label" data-bn="সন্তুষ্ট ক্লায়েন্ট" data-en="Satisfied Clients">সন্তুষ্ট ক্লায়েন্ট</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">9+</div><div class="hero-stat-label" data-bn="বছরের অভিজ্ঞতা" data-en="Years Experience">বছরের অভিজ্ঞতা</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">2015</div><div class="hero-stat-label" data-bn="প্রতিষ্ঠাকাল" data-en="Founded">প্রতিষ্ঠাকাল</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label" data-bn="সরকারি নির্দেশনা অনুযায়ী" data-en="Govt. Compliant">সরকারি নির্দেশনা</div></div>
+  </div>
+  <div class="scroll-hint" data-bn="নিচে স্ক্রল করুন" data-en="Scroll down">SCROLL</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal-left">
+        <div class="section-tag" data-bn="পরিচিতি" data-en="About Us">পরিচিতি</div>
+        <h2 class="section-title" data-bn="আমরা কারা" data-en="Who We <span class='accent'>Are</span>">আমরা কারা</h2>
+        <p data-bn="Smart Soft Limited একটি উদ্ভাবনী প্রযুক্তি প্রতিষ্ঠান যা ব্যবসা ও ব্যক্তিদের দ্রুতগতির ডিজিটাল বিশ্বে এগিয়ে যেতে সহায়তা করে।" data-en="Smart Soft Limited is an innovative technology company that empowers businesses and individuals to thrive in a rapidly evolving digital landscape.">Smart Soft Limited একটি উদ্ভাবনী প্রযুক্তি প্রতিষ্ঠান যা ব্যবসা ও ব্যক্তিদের দ্রুতগতির ডিজিটাল বিশ্বে এগিয়ে যেতে সহায়তা করে।</p>
+        <p data-bn="শিক্ষা থেকে ব্যবসা, স্বাস্থ্য ও স্থানীয় সরকার পর্যন্ত — আমরা প্রযুক্তির মাধ্যমে জটিলতাকে সহজ করি। সফটওয়্যার, ইন্টিগ্রেটেড ডিভাইস, নিরাপত্তা-নজরদারি, আইটি পণ্য, প্রশিক্ষণ ও হার্ডওয়্যার — আমাদের সমাধান আজকের চাহিদা পূরণ করে এবং আগামীর চ্যালেঞ্জের জন্য প্রস্তুত।" data-en="From Education to Business, Health and Local Government — we simplify complexity through technology. Software, integrated devices, security-surveillance, IT products, training and hardware — our solutions meet today's needs and anticipate tomorrow's challenges.">শিক্ষা থেকে ব্যবসা, স্বাস্থ্য ও স্থানীয় সরকার পর্যন্ত — আমরা প্রযুক্তির মাধ্যমে জটিলতাকে সহজ করি।</p>
+        <p data-bn="আমরা পরিবেশ, মানবাধিকার ও নীতির প্রতি অবিচল প্রতিশ্রুতি নিয়ে ব্যবসা পরিচালনা করি।" data-en="We run our business with an unwavering commitment to environment, human rights and ethics.">আমরা পরিবেশ, মানবাধিকার ও নীতির প্রতি অবিচল প্রতিশ্রুতি নিয়ে ব্যবসা পরিচালনা করি।</p>
+        <div class="about-pillars" style="margin-top:1.5rem">
+          <div class="pillar">
+            <div class="pillar-icon">🎯</div>
+            <div><h4 data-bn="বৈচিত্র্য ও অন্তর্ভুক্তি" data-en="Diversity & Inclusion">বৈচিত্র্য ও অন্তর্ভুক্তি</h4><p data-bn="সকলের জন্য সমান সুযোগ" data-en="Equal opportunity for all">সকলের জন্য সমান সুযোগ</p></div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🔧</div>
+            <div><h4 data-bn="সেলস · সাপোর্ট · সার্ভিস" data-en="Sales · Support · Service">সেলস · সাপোর্ট · সার্ভিস</h4><p data-bn="সম্পূর্ণ ৩৬০° সহায়তা" data-en="Complete 360° support">সম্পূর্ণ ৩৬০° সহায়তা</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="about-cards">
+          <div class="stat-card"><div class="stat-card-num">9+</div><div class="stat-card-label" data-bn="বছরের অভিজ্ঞতা" data-en="Years Experience">বছরের অভিজ্ঞতা</div></div>
+          <div class="stat-card blue"><div class="stat-card-num">2015</div><div class="stat-card-label" data-bn="প্রতিষ্ঠাকাল" data-en="Founded Since">প্রতিষ্ঠাকাল</div></div>
+          <div class="stat-card teal"><div class="stat-card-num">5000+</div><div class="stat-card-label" data-bn="সন্তুষ্ট ক্লায়েন্ট" data-en="Satisfied Clients">সন্তুষ্ট ক্লায়েন্ট</div></div>
+          <div class="stat-card gold"><div class="stat-card-num">100%</div><div class="stat-card-label" data-bn="সরকারি কমপ্লায়েন্ট" data-en="Govt. Compliant">সরকারি কমপ্লায়েন্ট</div></div>
+        </div>
+        <div class="pillar" style="margin-top:1rem;background:var(--surface);border:1px solid var(--border)">
+          <div class="pillar-icon">👨‍💼</div>
+          <div>
+            <h4 style="color:var(--red)" data-bn="হাসান মাহমুদ" data-en="Hasan Mahmud">হাসান মাহমুদ</h4>
+            <p data-bn="ম্যানেজিং ডিরেক্টর, Smart Soft Limited" data-en="Managing Director, Smart Soft Limited">ম্যানেজিং ডিরেক্টর, Smart Soft Limited</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNER ERP -->
+<section id="learner">
+  <div class="learner-bg"></div>
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <div class="section-tag" data-bn="দেশের সেরা ERP" data-en="Bangladesh's Best ERP">দেশের সেরা ERP</div>
+      <h2 class="section-title">
+        <span class="accent">LEARNER</span><br>
+        <span data-bn="Education System" data-en="Education System">Education System</span>
+      </h2>
+      <p class="section-desc" style="margin:1rem auto 2rem" data-bn="শিক্ষার ডিজিটাল রূপান্তরে 'Learner' — বাংলাদেশের সেরা ERP সফটওয়্যার। শিক্ষা অধিদপ্তরের সকল রিকুয়ারমেন্ট ১০০% পূরণ করে।" data-en="'Learner' for digital transformation of education — Bangladesh's best ERP software. Fulfills 100% of the Education Directorate's requirements.">শিক্ষার ডিজিটাল রূপান্তরে 'Learner' — বাংলাদেশের সেরা ERP সফটওয়্যার।</p>
+    </div>
+    <div class="flower-grid reveal">
+      <div class="flower-card">
+        <div class="flower-num">০১</div>
+        <h4 data-bn="এডমিশন ম্যানেজমেন্ট" data-en="Admission Management">এডমিশন ম্যানেজমেন্ট</h4>
+        <p data-bn="সম্পূর্ণ অনলাইন ভর্তি ব্যবস্থাপনা সিস্টেম" data-en="Complete online admission management system">সম্পূর্ণ অনলাইন ভর্তি ব্যবস্থাপনা সিস্টেম</p>
+      </div>
+      <div class="flower-card">
+        <div class="flower-num">০২</div>
+        <h4 data-bn="ডাইনামিক ওয়েবসাইট" data-en="Dynamic Website">ডাইনামিক ওয়েবসাইট</h4>
+        <p data-bn="মাল্টি টেমপ্লেট — ১ ক্লিকে পরিবর্তন" data-en="Multi-template — change with 1 click">মাল্টি টেমপ্লেট — ১ ক্লিকে পরিবর্তন</p>
+      </div>
+      <div class="flower-card">
+        <div class="flower-num">০৩</div>
+        <h4 data-bn="ডিজিটাল হাজিরা" data-en="Digital Attendance">ডিজিটাল হাজিরা</h4>
+        <p data-bn="ফেস রিকগনিশন ও ফিঙ্গারপ্রিন্ট ডিভাইস সংযুক্ত" data-en="Face recognition & fingerprint device integrated">ফেস রিকগনিশন ও ফিঙ্গারপ্রিন্ট ডিভাইস সংযুক্ত</p>
+      </div>
+      <div class="flower-card">
+        <div class="flower-num">০৪</div>
+        <h4 data-bn="রেজাল্ট ম্যানেজমেন্ট" data-en="Result Management">রেজাল্ট ম্যানেজমেন্ট</h4>
+        <p data-bn="সকল পরীক্ষার রেজাল্ট প্রসেসিং ও প্রকাশনা" data-en="Processing & publishing all exam results">সকল পরীক্ষার রেজাল্ট প্রসেসিং ও প্রকাশনা</p>
+      </div>
+      <div class="flower-card">
+        <div class="flower-num">০৫</div>
+        <h4 data-bn="অনলাইন ফিস কালেকশন" data-en="Online Fee Collection">অনলাইন ফিস কালেকশন</h4>
+        <p data-bn="বিকাশ, নগদ, রকেট, সকল ব্যাংক ও চ্যানেল" data-en="bKash, Nagad, Rocket, all banks & channels">বিকাশ, নগদ, রকেট, সকল ব্যাংক ও চ্যানেল</p>
+      </div>
+      <div class="flower-card" style="border-color:var(--blue)">
+        <div class="flower-num" style="color:var(--blue)">+</div>
+        <h4 data-bn="আরও অনেক ফিচার" data-en="Many More Features">আরও অনেক ফিচার</h4>
+        <p data-bn="পেরল, ইনভেন্টরি, একাউন্টস, SMS, লাইব্রেরি, হোস্টেল, ট্রান্সপোর্ট ও আরও" data-en="Payroll, inventory, accounts, SMS, library, hostel, transport & more">পেরল, ইনভেন্টরি, একাউন্টস, SMS, লাইব্রেরি ও আরও</p>
+      </div>
+    </div>
+
+    <!-- ANIMATED SHIKKHALOY PRO DASHBOARD PREVIEW -->
+    <div style="margin-top:3rem" class="reveal">
+      <h3 style="font-family:var(--heading-font);font-size:1.5rem;margin-bottom:1.5rem;letter-spacing:1px;text-align:center" data-bn="লাইভ ড্যাশবোর্ড প্রিভিউ" data-en="Live Dashboard Preview">লাইভ <span class="accent">ড্যাশবোর্ড</span> প্রিভিউ</h3>
+      <div class="pro-dashboard">
+        <div class="pd-sidebar">
+          <div class="pd-logo">🎓 <span>Shikkhaloy</span></div>
+          <div class="pd-nav-item active">📊 Dashboard</div>
+          <div class="pd-nav-item">👨‍🎓 Student</div>
+          <div class="pd-nav-item">📋 Attendance</div>
+          <div class="pd-nav-item">👩‍🏫 HR Mgmt</div>
+          <div class="pd-nav-item">💰 Payroll</div>
+          <div class="pd-nav-item">📝 Result</div>
+          <div class="pd-nav-item">💳 Accounts</div>
+          <div class="pd-nav-item">📚 Library</div>
+          <div class="pd-nav-item">🌐 Website</div>
+          <div class="pd-nav-item">📦 Inventory</div>
+        </div>
+        <div class="pd-main">
+          <div class="pd-topbar">
+            <span style="font-size:0.8rem;font-weight:600">Shikkhaloy Pro Dashboard</span>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <span class="pd-pill green">● লাইভ</span>
+              <span style="font-size:0.72rem;color:var(--muted)">Rahman Sarkar</span>
+            </div>
+          </div>
+          <div class="pd-stat-row">
+            <div class="pd-stat-card" style="background:linear-gradient(135deg,#1a3d7c,#0d2550)">
+              <div class="pd-stat-num" id="animStudents">0</div>
+              <div class="pd-stat-label">Total Students</div>
+              <div class="pd-stat-delta green">↑ +0.5%</div>
+            </div>
+            <div class="pd-stat-card" style="background:linear-gradient(135deg,#1a1a4a,#0a0a2d)">
+              <div class="pd-stat-num" id="animTeachers">0</div>
+              <div class="pd-stat-label">Total Teachers</div>
+              <div class="pd-stat-delta red">↓ -2%</div>
+            </div>
+            <div class="pd-stat-card" style="background:linear-gradient(135deg,#0e3d2e,#062218)">
+              <div class="pd-stat-num" id="animAttend">0</div>
+              <div class="pd-stat-label">Today Attendance</div>
+              <div class="pd-stat-delta green">↑ +5%</div>
+            </div>
+            <div class="pd-stat-card" style="background:linear-gradient(135deg,#3d2a00,#1a1200)">
+              <div class="pd-stat-num" id="animTeachAtt">0</div>
+              <div class="pd-stat-label">Teacher Attends</div>
+              <div class="pd-stat-delta red">↓ -2%</div>
+            </div>
+          </div>
+          <div class="pd-chart-row">
+            <div class="pd-chart-box">
+              <div class="pd-chart-title">School Finance <span class="pd-pill">Monthly</span></div>
+              <div class="pd-chart-nums">
+                <div><div class="pd-big-num green">৳ 5,59,234</div><div class="pd-chart-sub">এ মাসে কালেকশন</div></div>
+                <div><div class="pd-big-num gold">৳ 1,23,456</div><div class="pd-chart-sub">বকেয়া এ মাসে</div></div>
+              </div>
+              <div class="pd-linechart" id="pdLineChart"></div>
+            </div>
+            <div class="pd-chart-box">
+              <div class="pd-chart-title">Due Students</div>
+              <div class="pd-due-list">
+                <div class="pd-due-row"><span class="pd-avatar">শ</span><div><div class="pd-due-name">Shafiqur Rahman</div><div class="pd-due-class">Class VII</div></div><div class="pd-due-amt">৳ 1,200</div></div>
+                <div class="pd-due-row"><span class="pd-avatar">আ</span><div><div class="pd-due-name">Abdur Rahim</div><div class="pd-due-class">Class VII</div></div><div class="pd-due-amt">৳ 1,500</div></div>
+                <div class="pd-due-row"><span class="pd-avatar">ম</span><div><div class="pd-due-name">Mashfi Al Ayan</div><div class="pd-due-class">Class VII</div></div><div class="pd-due-amt">৳ 14,000</div></div>
+                <div class="pd-due-row"><span class="pd-avatar">শ</span><div><div class="pd-due-name">Shakil Sarker</div><div class="pd-due-class">Class VIII</div></div><div class="pd-due-amt">৳ 2,000</div></div>
+                <div class="pd-due-row"><span class="pd-avatar">ম</span><div><div class="pd-due-name">Manik Ahmed</div><div class="pd-due-class">Class XI</div></div><div class="pd-due-amt">৳ 5,000</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="pd-att-class-row">
+            <div class="pd-chart-title">Total Attendance Class Wise</div>
+            <div class="pd-donut-row">
+              <div class="pd-donut-wrap"><svg class="pd-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.8"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--teal)" stroke-width="3.8" stroke-dasharray="81 19" stroke-dashoffset="25" class="pd-donut-arc"/></svg><div class="pd-donut-pct">81%</div><div class="pd-donut-lbl">Class 7</div></div>
+              <div class="pd-donut-wrap"><svg class="pd-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.8"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--gold)" stroke-width="3.8" stroke-dasharray="22 78" stroke-dashoffset="25" class="pd-donut-arc"/></svg><div class="pd-donut-pct">22%</div><div class="pd-donut-lbl">Class 8</div></div>
+              <div class="pd-donut-wrap"><svg class="pd-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.8"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--red)" stroke-width="3.8" stroke-dasharray="62 38" stroke-dashoffset="25" class="pd-donut-arc"/></svg><div class="pd-donut-pct">62%</div><div class="pd-donut-lbl">Class 9</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:3rem" class="reveal">
+      <h3 style="font-family:var(--heading-font);font-size:1.5rem;margin-bottom:1.25rem;letter-spacing:1px" data-bn="মূল মডিউলসমূহ" data-en="Core Modules">মূল মডিউলসমূহ</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.75rem">
+        <div class="fees-card"><div class="fees-card-icon">👨‍🎓</div><h4 data-bn="Student Management" data-en="Student Management">Student Management</h4><p data-bn="ডেটাবেজ, আইডি কার্ড, একাডেমিক তথ্য" data-en="Database, ID card, academic info">ডেটাবেজ, আইডি কার্ড, একাডেমিক তথ্য</p></div>
+        <div class="fees-card"><div class="fees-card-icon">👩‍🏫</div><h4 data-bn="Teacher/Staff" data-en="Teacher/Staff">Teacher/Staff</h4><p data-bn="প্রোফাইল, লিভ, পেরফরমেন্স ট্র্যাকিং" data-en="Profile, leave, performance tracking">প্রোফাইল, লিভ, পেরফরমেন্স ট্র্যাকিং</p></div>
+        <div class="fees-card"><div class="fees-card-icon">💰</div><h4 data-bn="Accounting" data-en="Accounting">Accounting</h4><p data-bn="রিসিপ্ট, ব্যাংক রিকনসিলিয়েশন, রিপোর্ট" data-en="Receipt, bank reconciliation, reports">রিসিপ্ট, ব্যাংক রিকনসিলিয়েশন, রিপোর্ট</p></div>
+        <div class="fees-card"><div class="fees-card-icon">📦</div><h4 data-bn="Inventory" data-en="Inventory">Inventory</h4><p data-bn="ফিজিক্যাল অ্যাসেট ট্র্যাকিং ও ম্যানেজমেন্ট" data-en="Physical asset tracking & management">ফিজিক্যাল অ্যাসেট ট্র্যাকিং ও ম্যানেজমেন্ট</p></div>
+        <div class="fees-card"><div class="fees-card-icon">📝</div><h4 data-bn="Exam & Result" data-en="Exam & Result">Exam & Result</h4><p data-bn="রুটিন, অ্যাডমিট কার্ড, ট্যাবুলেশন শিট" data-en="Routine, admit card, tabulation sheet">রুটিন, অ্যাডমিট কার্ড, ট্যাবুলেশন শিট</p></div>
+        <div class="fees-card"><div class="fees-card-icon">💬</div><h4 data-bn="SMS & Email" data-en="SMS & Email">SMS & Email</h4><p data-bn="তাৎক্ষণিক নোটিফিকেশন অভিভাবকদের কাছে" data-en="Instant notifications to parents">তাৎক্ষণিক নোটিফিকেশন অভিভাবকদের কাছে</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTENDANCE -->
+<section id="attendance">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="স্মার্ট হাজিরা" data-en="Smart Attendance">স্মার্ট হাজিরা</div>
+      <h2 class="section-title"><span class="accent">ডিজিটাল</span><br><span data-bn="হাজিরা সিস্টেম" data-en="Attendance System">হাজিরা সিস্টেম</span></h2>
+      <p class="section-desc" data-bn="এক আঙিনায় দেশের সকল প্রতিষ্ঠান। ফেস রিকগনিশন ও ফিঙ্গারপ্রিন্ট প্রযুক্তি ব্যবহার করে তাৎক্ষণিক SMS, ইমেইল ও নোটিফিকেশন।" data-en="All institutions nationwide in one platform. Instant SMS, email & notifications using face recognition and fingerprint technology.">এক আঙিনায় দেশের সকল প্রতিষ্ঠান। ফেস রিকগনিশন ও ফিঙ্গারপ্রিন্ট প্রযুক্তি।</p>
+    </div>
+
+    <div class="compare-grid reveal">
+      <div class="compare-col">
+        <div class="compare-header bad" data-bn="❌ ম্যানুয়াল পদ্ধতির অসুবিধা" data-en="❌ Manual Method Problems">❌ ম্যানুয়াল পদ্ধতির অসুবিধা</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="ক্লাশের সময় নষ্ট হয়" data-en="Class time wasted">ক্লাশের সময় নষ্ট হয়</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="রিপোর্ট তৈরিতে অনেক সময় লাগে" data-en="Reports take a long time">রিপোর্ট তৈরিতে অনেক সময় লাগে</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="অভিভাবক জানতে পারেন না সন্তান কখন পৌঁছেছে" data-en="Parents don't know when child arrives">অভিভাবক জানতে পারেন না সন্তান কখন পৌঁছেছে</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="অনুপস্থিত শিক্ষার্থী আলাদাভাবে চিহ্নিত করা কঠিন" data-en="Hard to identify absent students separately">অনুপস্থিত শিক্ষার্থী চিহ্নিত করা কঠিন</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="জরিমানা কালেকশন কঠিন ও সময়সাপেক্ষ" data-en="Fine collection is difficult and time-consuming">জরিমানা কালেকশন কঠিন ও সময়সাপেক্ষ</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="শিক্ষকদের হাজিরার রিয়েল-টাইম ডেটা নেই" data-en="No real-time teacher attendance data">শিক্ষকদের হাজিরার রিয়েল-টাইম ডেটা নেই</span></div>
+        </div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-header good" data-bn="✅ Learner এর মাধ্যমে হাজিরার সুবিধা" data-en="✅ Benefits via Learner Attendance">✅ Learner এর মাধ্যমে হাজিরার সুবিধা</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="ক্লাশের সময় বেঁচে যায়" data-en="Class time is saved">ক্লাশের সময় বেঁচে যায়</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="সকল রিপোর্ট নিমেষেই তৈরি হয়" data-en="All reports generated instantly">সকল রিপোর্ট নিমেষেই তৈরি হয়</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="SMS/নোটিফিকেশনে অভিভাবক তাৎক্ষণিক জানতে পারেন" data-en="Parents notified instantly via SMS/notification">SMS/নোটিফিকেশনে অভিভাবক তাৎক্ষণিক জানতে পারেন</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="অনুপস্থিতির হার কমে, রেজাল্ট ভালো হয়" data-en="Absence rate drops, results improve">অনুপস্থিতির হার কমে, রেজাল্ট ভালো হয়</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="ফিস কালেকশনে জরিমানা অটোমেটিক কাউন্ট হয়" data-en="Fines auto-counted during fee collection">ফিস কালেকশনে জরিমানা অটোমেটিক কাউন্ট হয়</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="শিক্ষক ও স্টাফের হাজিরার লাইভ রিপোর্ট সহ অসংখ্য রিপোর্ট" data-en="Live reports for teachers & staff with countless reports">শিক্ষক ও স্টাফের হাজিরার লাইভ রিপোর্ট</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hazira-flow reveal">
+      <div class="flow-step">
+        <div class="flow-step-icon">🖐</div>
+        <h5 data-bn="ফিঙ্গারপ্রিন্ট / ফেস" data-en="Fingerprint / Face">ফিঙ্গারপ্রিন্ট / ফেস</h5>
+        <p data-bn="ডিভাইসে স্পর্শ বা মুখ দেখান" data-en="Touch device or show face">ডিভাইসে স্পর্শ বা মুখ দেখান</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">☁️</div>
+        <h5 data-bn="ক্লাউড সার্ভার" data-en="Cloud Server">ক্লাউড সার্ভার</h5>
+        <p data-bn="LAN/WAN বা wireless ডেটা পাঠায়" data-en="Sends data via LAN/WAN or wireless">LAN/WAN বা wireless ডেটা পাঠায়</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">📱</div>
+        <h5 data-bn="SMS/নোটিফিকেশন" data-en="SMS/Notification">SMS/নোটিফিকেশন</h5>
+        <p data-bn="অভিভাবক তাৎক্ষণিক জানতে পারেন" data-en="Parents instantly notified">অভিভাবক তাৎক্ষণিক জানতে পারেন</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">📊</div>
+        <h5 data-bn="রিপোর্ট ড্যাশবোর্ড" data-en="Report Dashboard">রিপোর্ট ড্যাশবোর্ড</h5>
+        <p data-bn="যেকোনো সময় রিপোর্ট দেখুন" data-en="View reports anytime">যেকোনো সময় রিপোর্ট দেখুন</p>
+      </div>
+    </div>
+
+    <!-- ANIMATED HAZIRA DEVICE VISUAL -->
+    <div class="hazira-anim-wrap reveal" style="margin-top:3rem">
+      <div class="hazira-scene">
+        <!-- Device -->
+        <div class="hazira-device">
+          <div class="hd-camera-bar">
+            <div class="hd-cam"></div><div class="hd-cam"></div>
+          </div>
+          <div class="hd-screen">
+            <div class="hd-scan-ring"></div>
+            <div class="hd-face-icon">👤</div>
+            <div class="hd-time">08:43 AM</div>
+            <div class="hd-name">Hasan Mahmud</div>
+            <div class="hd-status">✓ উপস্থিত</div>
+          </div>
+          <div class="hd-fingerprint-area">
+            <div class="hd-fp-icon">〈⌇〉</div>
+          </div>
+          <div class="hd-brand">SMART HAZIRA</div>
+        </div>
+
+        <!-- Data pulse line -->
+        <div class="hazira-pulse-line">
+          <div class="hpl-dot d1"></div>
+          <div class="hpl-dot d2"></div>
+          <div class="hpl-dot d3"></div>
+        </div>
+
+        <!-- Phone with notification -->
+        <div class="hazira-phone">
+          <div class="hp-notch"></div>
+          <div class="hp-screen">
+            <div class="hp-status-bar">Grameenphone ▪ 08:43</div>
+            <div class="hp-notif n1">
+              <div class="hp-notif-icon">🔔</div>
+              <div class="hp-notif-text">
+                <div class="hp-notif-title">Smart Hazira</div>
+                <div class="hp-notif-body">হাসান মাহমুদ ০৮:৪৩ AM-এ উপস্থিত হয়েছেন</div>
+              </div>
+              <div class="hp-notif-time">এখনই</div>
+            </div>
+            <div class="hp-notif n2" style="animation-delay:0.8s">
+              <div class="hp-notif-icon">💬</div>
+              <div class="hp-notif-text">
+                <div class="hp-notif-title">SMS</div>
+                <div class="hp-notif-body">Dear Guardian, your ward checked in at 08:43 AM</div>
+              </div>
+              <div class="hp-notif-time">এখনই</div>
+            </div>
+          </div>
+          <div class="hp-home-bar"></div>
+        </div>
+      </div>
+      <!-- Attendance report mini preview -->
+      <div class="att-report-mini reveal">
+        <div class="arm-header">
+          <span class="arm-title">📋 Teacher &amp; Staff Attendance Report</span>
+          <div class="arm-badges">
+            <span class="arm-badge green">Present: 96</span>
+            <span class="arm-badge red">Absent: 31</span>
+          </div>
+        </div>
+        <div class="arm-table">
+          <div class="arm-row arm-thead">
+            <span>ID</span><span>নাম</span><span>পদবি</span><span>In Time</span><span>Status</span>
+          </div>
+          <div class="arm-row"><span>3522</span><span>Md. Shabibor Rahman</span><span>Asst. Prof</span><span class="green">9:10 am</span><span class="badge-p">Present</span></div>
+          <div class="arm-row"><span>3524</span><span>Md. Amirul Islam</span><span>Asst. Prof</span><span class="green">8:48 am</span><span class="badge-p">Present</span></div>
+          <div class="arm-row"><span>3528</span><span>Md. Shahidul Islam</span><span>Asst. Prof</span><span class="orange">—</span><span class="badge-l">Leave</span></div>
+          <div class="arm-row"><span>32023136</span><span>MD. Abdus Salam</span><span>Vice Principal</span><span class="red">—</span><span class="badge-a">Absent</span></div>
+        </div>
+        <p style="font-size:0.72rem;color:var(--muted);margin-top:0.75rem;text-align:center" data-bn="ছবি যোগ করুন: আসল হাজিরা রিপোর্ট" data-en="Add image: actual attendance report">📌 এখানে আসল হাজিরা রিপোর্ট স্ক্রিনশট যোগ করা যাবে</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEES -->
+<section id="fees">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="অনলাইন ফিস কালেকশন" data-en="Online Fee Collection">অনলাইন ফিস কালেকশন</div>
+      <h2 class="section-title"><span class="accent">স্বচ্ছ</span><br><span data-bn="ফিস ব্যবস্থাপনা" data-en="Fee Management">ফিস ব্যবস্থাপনা</span></h2>
+    </div>
+    <div class="fees-highlight reveal">
+      <p>
+        <strong data-bn="বাংলাদেশে একমাত্র আমরাই" data-en="We are the only ones in Bangladesh">বাংলাদেশে একমাত্র আমরাই</strong>
+        <span data-bn=" ১০০% 'স্বচ্ছতা ও জবাবদিহিসংক্রান্ত নীতিমালা-২০২৩' অনুযায়ী প্রতিষ্ঠানের ফিস কালেকশন, আয় ব্যবস্থাপনা সিস্টেম ইন্টিগ্রেট করেছি।" data-en=" have integrated the institution's fee collection and revenue management system in compliance with the 'Transparency and Accountability Policy-2023'."> ১০০% 'স্বচ্ছতা ও জবাবদিহিসংক্রান্ত নীতিমালা-২০২৩' অনুযায়ী প্রতিষ্ঠানের ফিস কালেকশন, আয় ব্যবস্থাপনা সিস্টেম ইন্টিগ্রেট করেছি।</span>
+      </p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-col">
+        <div class="compare-header bad" data-bn="❌ ম্যানুয়াল ফিস কালেকশনের অসুবিধা" data-en="❌ Manual Fee Collection Problems">❌ ম্যানুয়াল ফিস কালেকশনের অসুবিধা</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="ক্লাশের সময় নষ্ট করে কালেকশন করতে হয়" data-en="Collection wastes class time">ক্লাশের সময় নষ্ট করে কালেকশন করতে হয়</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="লাইনে দাঁড়িয়ে ফিস দিতে হয়" data-en="Students must queue to pay fees">লাইনে দাঁড়িয়ে ফিস দিতে হয়</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="ক্যাশ টাকায় ছেঁড়া, জাল নোটের ঝামেলা থাকে" data-en="Torn/counterfeit notes cause problems">ক্যাশ টাকায় ছেঁড়া, জাল নোটের ঝামেলা</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="কোন ফান্ডে কত টাকা কালেকশন হচ্ছে জানা যায় না" data-en="No visibility into fund-wise collection">কোন ফান্ডে কত টাকা কালেকশন হচ্ছে জানা যায় না</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="সারা মাসের হিসাব তৈরিতে অনেক সময় লাগে" data-en="Monthly accounts take a long time">সারা মাসের হিসাব তৈরিতে অনেক সময় লাগে</span></div>
+          <div class="compare-item"><span class="icon">➡</span><span data-bn="ব্যাংকের হিসাবের সাথে মেলানো কঠিন" data-en="Hard to reconcile with bank records">ব্যাংকের হিসাবের সাথে মেলানো কঠিন</span></div>
+        </div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-header good" data-bn="✅ Learner এর মাধ্যমে ফিস কালেকশনের সুবিধা" data-en="✅ Benefits via Learner Fee Collection">✅ Learner এর মাধ্যমে ফিস কালেকশনের সুবিধা</div>
+        <div class="compare-body">
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="ফিস কালেকশনের জন্য কোন সময় অপচয় হয় না" data-en="No time wasted on fee collection">ফিস কালেকশনের জন্য কোন সময় অপচয় হয় না</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="ঘরে বসেই পেমেন্ট করা যায়" data-en="Payment from home is possible">ঘরে বসেই পেমেন্ট করা যায়</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="অনলাইন পেমেন্টের ফলে এসবের কোন ঝামেলাই নেই" data-en="Online payment eliminates these issues">অনলাইন পেমেন্টের ফলে এসবের কোন ঝামেলাই নেই</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="ফিস পেমেন্টের সাথে সাথে অটোমেটিক ফান্ড ডিস্ট্রিবিউশন" data-en="Automatic fund distribution upon payment">ফিস পেমেন্টের সাথে সাথে অটো ফান্ড ডিস্ট্রিবিউশন</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="মুহূর্তের মধ্যে যেকোনো সময়ের হিসাব রেডি থাকে" data-en="Instant accounts available at any time">মুহূর্তের মধ্যে যেকোনো সময়ের হিসাব রেডি</span></div>
+          <div class="compare-item"><span class="icon">✔</span><span data-bn="কালেকশন এবং ব্যাংকিং থাকে নির্ভুল এবং স্বচ্ছ" data-en="Collection and banking are accurate and transparent">কালেকশন এবং ব্যাংকিং থাকে নির্ভুল এবং স্বচ্ছ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="fees-grid reveal" style="margin-top:2rem">
+      <div class="fees-card"><div class="fees-card-icon">📱</div><h4>বিকাশ</h4><p data-bn="মোবাইল ব্যাংকিং পেমেন্ট" data-en="Mobile banking payment">মোবাইল ব্যাংকিং পেমেন্ট</p></div>
+      <div class="fees-card"><div class="fees-card-icon">💵</div><h4>নগদ</h4><p data-bn="ডাক বিভাগের ডিজিটাল লেনদেন" data-en="Postal digital transaction">ডাক বিভাগের ডিজিটাল লেনদেন</p></div>
+      <div class="fees-card"><div class="fees-card-icon">🚀</div><h4>রকেট</h4><p data-bn="DBBL মোবাইল ব্যাংকিং" data-en="DBBL mobile banking">DBBL মোবাইল ব্যাংকিং</p></div>
+      <div class="fees-card"><div class="fees-card-icon">⭐</div><h4>আমার-পে</h4><p data-bn="aamarPay গেটওয়ে সংযুক্ত" data-en="aamarPay gateway integrated">aamarPay গেটওয়ে সংযুক্ত</p></div>
+      <div class="fees-card"><div class="fees-card-icon">🏦</div><h4 data-bn="সোনালী ব্যাংক" data-en="Sonali Bank">সোনালী ব্যাংক</h4><p data-bn="সরকারি ব্যাংক চ্যানেল" data-en="Government bank channel">সরকারি ব্যাংক চ্যানেল</p></div>
+      <div class="fees-card"><div class="fees-card-icon">💳</div><h4 data-bn="সকল ব্যাংক" data-en="All Banks">সকল ব্যাংক</h4><p data-bn="যেকোনো ব্যাংক চ্যানেলে পেমেন্ট" data-en="Payment via any bank channel">যেকোনো ব্যাংক চ্যানেলে পেমেন্ট</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="result">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="রেজাল্ট ম্যানেজমেন্ট" data-en="Result Management">রেজাল্ট ম্যানেজমেন্ট</div>
+      <h2 class="section-title"><span class="accent">স্মার্ট</span><br><span data-bn="রেজাল্ট সিস্টেম" data-en="Result System">রেজাল্ট সিস্টেম</span></h2>
+    </div>
+    <div class="result-grid reveal">
+      <div class="result-features">
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1.25rem" data-bn="Learner এর মাধ্যমে কয়েক হাজার শিক্ষার্থীর ট্যাবুলেশন শিট ও মার্কশিট এক নিমেষেই তৈরি হয়ে যায়। ১ দিনেই রেজাল্ট তৈরি করা যায়।" data-en="Through Learner, tabulation sheets and mark sheets for thousands of students are generated in an instant. Results can be prepared in just 1 day.">Learner এর মাধ্যমে কয়েক হাজার শিক্ষার্থীর ট্যাবুলেশন শিট ও মার্কশিট এক নিমেষেই তৈরি হয়ে যায়।</p>
+        <div class="result-feature"><div class="icon">📋</div><div><h5 data-bn="অটোমেটিক অ্যাডমিট কার্ড" data-en="Automatic Admit Card">অটোমেটিক অ্যাডমিট কার্ড</h5><p data-bn="কোন কষ্ট না করেই তৈরি হয়ে যায়" data-en="Generated without any effort">কোন কষ্ট না করেই তৈরি হয়ে যায়</p></div></div>
+        <div class="result-feature"><div class="icon">📊</div><div><h5 data-bn="ট্যাবুলেশন শিট" data-en="Tabulation Sheet">ট্যাবুলেশন শিট</h5><p data-bn="হাজার শিক্ষার্থীর শিট মুহূর্তে তৈরি" data-en="Thousands of sheets generated instantly">হাজার শিক্ষার্থীর শিট মুহূর্তে তৈরি</p></div></div>
+        <div class="result-feature"><div class="icon">🔄</div><div><h5 data-bn="অটো আপডেট" data-en="Auto Update">অটো আপডেট</h5><p data-bn="একজায়গায় আপডেট করলে সবজায়গায় অটো আপডেট" data-en="Update one place, auto-updates everywhere">একজায়গায় আপডেট করলে সবজায়গায় অটো আপডেট</p></div></div>
+        <div class="result-feature"><div class="icon">📱</div><div><h5 data-bn="ডিজিটাল মার্কশিট" data-en="Digital Mark Sheet">ডিজিটাল মার্কশিট</h5><p data-bn="SMS, ওয়েবসাইট ও অ্যাপের মাধ্যমে রেজাল্ট জানা যায়" data-en="Results via SMS, website and app">SMS, ওয়েবসাইট ও অ্যাপের মাধ্যমে রেজাল্ট জানা যায়</p></div></div>
+        <div class="result-feature"><div class="icon">🏆</div><div><h5 data-bn="মেরিট পজিশন" data-en="Merit Position">মেরিট পজিশন</h5><p data-bn="ক্লাশ-সেকশন অনুযায়ী পাশ-ফেইল, মেরিট পজিশন" data-en="Pass-fail, merit position by class-section">ক্লাশ-সেকশন অনুযায়ী পাশ-ফেইল, মেরিট পজিশন</p></div></div>
+        <div class="result-feature"><div class="icon">🎓</div><div><h5 data-bn="শ্রেণী পরীক্ষা ব্যবস্থাপনা" data-en="Class Test Management">শ্রেণী পরীক্ষা ব্যবস্থাপনা</h5><p data-bn="ক্লাশ টেস্ট, নোটিশ ও একাডেমিক ক্যালেন্ডার" data-en="Class tests, notices & academic calendar">ক্লাশ টেস্ট, নোটিশ ও একাডেমিক ক্যালেন্ডার</p></div></div>
+      </div>
+      <div>
+        <div class="report-card-demo">
+          <div class="rcd-header" data-bn="Academic Transcript নমুনা" data-en="Sample Academic Transcript">Academic Transcript নমুনা</div>
+          <div class="rcd-row"><span class="label" data-bn="প্রতিষ্ঠান" data-en="Institution">প্রতিষ্ঠান</span><span class="val">Victoria Jubilee Govt. High School</span></div>
+          <div class="rcd-row"><span class="label" data-bn="শ্রেণী" data-en="Class">শ্রেণী</span><span class="val">Class TEN – SCIENCE</span></div>
+          <div class="rcd-row"><span class="label">Bangla</span><span class="val">142 / 200</span></div>
+          <div class="rcd-row"><span class="label">English</span><span class="val">151 / 200</span></div>
+          <div class="rcd-row"><span class="label">Mathematics</span><span class="val gold">72 / 100</span></div>
+          <div class="rcd-row"><span class="label">Biology</span><span class="val pass">84 / 100 — A+</span></div>
+          <div class="rcd-row"><span class="label">GPA</span><span class="val pass">3.28 — B</span></div>
+          <div class="rcd-row"><span class="label" data-bn="ফলাফল" data-en="Result">ফলাফল</span><span class="val pass" data-bn="উত্তীর্ণ" data-en="Passed">উত্তীর্ণ</span></div>
+        </div>
+        <div class="report-card-demo" style="margin-top:1rem">
+          <div class="rcd-header" data-bn="Seat Card নমুনা" data-en="Sample Seat Card">Seat Card নমুনা</div>
+          <div class="rcd-row"><span class="label" data-bn="পরীক্ষা" data-en="Exam">পরীক্ষা</span><span class="val">Half Yearly Exam 2024</span></div>
+          <div class="rcd-row"><span class="label" data-bn="নাম" data-en="Name">নাম</span><span class="val">A.K.M Fahim Abrar</span></div>
+          <div class="rcd-row"><span class="label">Roll</span><span class="val">1</span></div>
+          <div class="rcd-row"><span class="label">Session</span><span class="val gold">2024</span></div>
+        </div>
+        <!-- Image placeholder for real report cards -->
+        <div class="img-placeholder-box" style="margin-top:1rem">
+          <div class="ipb-inner">
+            <div class="ipb-icon">🖼️</div>
+            <p class="ipb-text" data-bn="আসল Academic Transcript ও Admit Card-এর ছবি এখানে যোগ করুন" data-en="Add actual Academic Transcript & Admit Card images here">আসল Academic Transcript ও Admit Card-এর ছবি এখানে যোগ করুন</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBSITE -->
+<section id="website">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="ডাইনামিক ওয়েবসাইট" data-en="Dynamic Website">ডাইনামিক ওয়েবসাইট</div>
+      <h2 class="section-title"><span class="accent">মাল্টি</span><br><span data-bn="টেমপ্লেট সিস্টেম" data-en="Template System">টেমপ্লেট সিস্টেম</span></h2>
+      <p class="section-desc" data-bn="এই প্রথম মাল্টি টেমপ্লেট ডাইনামিক ওয়েবসাইট যা শতভাগ সরকারি নির্দেশনা মোতাবেক ডিজাইন করা। ইউজার মাত্র ১ ক্লিকে পছন্দমতো ওয়েবসাইট টেমপ্লেট পরিবর্তন করতে পারবে।" data-en="The first multi-template dynamic website fully designed according to government guidelines. Users can change the website template with just 1 click.">এই প্রথম মাল্টি টেমপ্লেট ডাইনামিক ওয়েবসাইট — ১ ক্লিকে টেমপ্লেট পরিবর্তন।</p>
+    </div>
+    <div class="template-grid reveal">
+      <div class="template-card">
+        <div class="template-img" style="background:linear-gradient(135deg,#1a3a7a,#0d1f4a)">
+          SCHOOL<div class="tpl-label">Template 01</div>
+        </div>
+        <div class="template-info"><h4 data-bn="স্কুল টেমপ্লেট" data-en="School Template">স্কুল টেমপ্লেট</h4><p data-bn="প্রাথমিক ও মাধ্যমিক বিদ্যালয়ের জন্য" data-en="For primary & secondary schools">প্রাথমিক ও মাধ্যমিক বিদ্যালয়ের জন্য</p></div>
+      </div>
+      <div class="template-card">
+        <div class="template-img" style="background:linear-gradient(135deg,#1a5c3a,#0d3a22)">
+          COLLEGE<div class="tpl-label">Template 02</div>
+        </div>
+        <div class="template-info"><h4 data-bn="কলেজ টেমপ্লেট" data-en="College Template">কলেজ টেমপ্লেট</h4><p data-bn="কলেজ ও বিশ্ববিদ্যালয়ের জন্য" data-en="For colleges & universities">কলেজ ও বিশ্ববিদ্যালয়ের জন্য</p></div>
+      </div>
+      <div class="template-card">
+        <div class="template-img" style="background:linear-gradient(135deg,#5c1a1a,#3a0d0d)">
+          MADRASA<div class="tpl-label">Template 03</div>
+        </div>
+        <div class="template-info"><h4 data-bn="মাদ্রাসা টেমপ্লেট" data-en="Madrasa Template">মাদ্রাসা টেমপ্লেট</h4><p data-bn="তামিরুল মিল্লাত কামিল মাদ্রাসার মতো" data-en="Like Tamirul Millat Kamil Madrasa">তামিরুল মিল্লাত কামিল মাদ্রাসার মতো</p></div>
+      </div>
+    </div>
+
+    <!-- Animated template switcher visual -->
+    <div class="template-switcher-demo reveal" style="margin-top:2.5rem">
+      <div class="tsd-header">
+        <span style="font-size:0.78rem;color:var(--muted)">লাইভ প্রিভিউ — ১ ক্লিকে টেমপ্লেট পরিবর্তন করুন</span>
+        <div class="tsd-btns">
+          <button class="tsd-btn active" data-tpl="school" onclick="switchTpl(this,'school')">স্কুল</button>
+          <button class="tsd-btn" data-tpl="college" onclick="switchTpl(this,'college')">কলেজ</button>
+          <button class="tsd-btn" data-tpl="madrasa" onclick="switchTpl(this,'madrasa')">মাদ্রাসা</button>
+        </div>
+      </div>
+      <div class="tsd-preview" id="tplPreview">
+        <div class="tsd-nav" id="tplNav" style="background:#1a3a7a">
+          <span class="tsd-nav-logo" id="tplLogo">🏫 স্কুল পোর্টাল</span>
+          <div class="tsd-nav-links">
+            <span>হোম</span><span>পরিচিতি</span><span>ভর্তি</span><span>নোটিশ</span><span>যোগাযোগ</span>
+          </div>
+        </div>
+        <div class="tsd-body">
+          <div class="tsd-hero" id="tplHero">
+            <div class="tsd-hero-text">
+              <div class="tsd-school-name" id="tplName">Model Government High School</div>
+              <div class="tsd-school-sub" id="tplSub">Dhaka, Bangladesh</div>
+              <div class="tsd-hero-btns">
+                <button class="tsd-hero-btn" id="tplBtn1">অনলাইন ভর্তি</button>
+                <button class="tsd-hero-btn outline">রেজাল্ট দেখুন</button>
+              </div>
+            </div>
+          </div>
+          <div class="tsd-stats-row">
+            <div class="tsd-stat"><div class="tsd-stat-n" id="tplS1">2,500+</div><div class="tsd-stat-l">শিক্ষার্থী</div></div>
+            <div class="tsd-stat"><div class="tsd-stat-n">85+</div><div class="tsd-stat-l">শিক্ষক</div></div>
+            <div class="tsd-stat"><div class="tsd-stat-n">98%</div><div class="tsd-stat-l">পাশের হার</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="img-placeholder-box" style="margin-top:1rem">
+        <div class="ipb-inner">
+          <div class="ipb-icon">🖼️</div>
+          <p class="ipb-text" data-bn="আসল ওয়েবসাইট স্ক্রিনশটগুলো এখানে যোগ করুন (স্কুল/কলেজ/মাদ্রাসা)" data-en="Add actual website screenshots here (school/college/madrasa)">আসল ওয়েবসাইট স্ক্রিনশটগুলো এখানে যোগ করুন</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem" class="reveal">
+      <h3 style="font-family:var(--heading-font);font-size:1.5rem;margin-bottom:1rem;letter-spacing:1px" data-bn="স্ট্যাটিক বনাম ডাইনামিক ওয়েবসাইট" data-en="Static vs Dynamic Website">স্ট্যাটিক বনাম ডাইনামিক ওয়েবসাইট</h3>
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th data-bn="বিষয়" data-en="Topic">বিষয়</th>
+            <th data-bn="স্ট্যাটিক ওয়েবসাইট" data-en="Static Website">স্ট্যাটিক ওয়েবসাইট</th>
+            <th data-bn="ডাইনামিক ওয়েবসাইট" data-en="Dynamic Website">ডাইনামিক ওয়েবসাইট</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-bn="প্রযুক্তি" data-en="Technology">প্রযুক্তি</td><td data-bn="শুধু HTML ও CSS" data-en="Only HTML & CSS">শুধু HTML ও CSS</td><td data-bn="PHP/ASP.Net, MySQL ডেটাবেজ" data-en="PHP/ASP.Net, MySQL database">PHP/ASP.Net, MySQL ডেটাবেজ</td></tr>
+          <tr><td data-bn="ডেটাবেজ" data-en="Database">ডেটাবেজ</td><td data-bn="নেই — শুধু সার্ভার থেকে ক্লায়েন্টে" data-en="None — server to client only">নেই</td><td data-bn="আছে — উভয়মুখী যোগাযোগ" data-en="Yes — bidirectional communication">আছে — উভয়মুখী যোগাযোগ</td></tr>
+          <tr><td data-bn="খরচ" data-en="Cost">খরচ</td><td data-bn="তৈরি করা সহজ, খরচ কম" data-en="Easy to build, low cost">সহজ, খরচ কম</td><td data-bn="তৈরি করা কঠিন, খরচ বেশি" data-en="Complex to build, higher cost">কঠিন, খরচ বেশি</td></tr>
+          <tr><td data-bn="উদাহরণ" data-en="Example">উদাহরণ</td><td data-bn="পোর্টফোলিও সাইট" data-en="Portfolio site">পোর্টফোলিও সাইট</td><td data-bn="প্রথম আলো, ফেসবুক ইত্যাদি" data-en="Prothom Alo, Facebook etc.">প্রথম আলো, ফেসবুক ইত্যাদি</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="নিরাপত্তা সিস্টেম" data-en="Security System">নিরাপত্তা সিস্টেম</div>
+      <h2 class="section-title"><span class="accent">Hikvision</span><br><span data-bn="সিকিউরিটি সলিউশন" data-en="Security Solution">সিকিউরিটি সলিউশন</span></h2>
+      <p class="section-desc" data-bn="Advanced AloT প্রযুক্তি ব্যবহার করে Hikvision ক্যাম্পাসে ও ক্যাম্পাসের বাইরে একটি নিরাপদ ও স্মার্ট পরিবেশ তৈরি করে।" data-en="Using advanced AloT technologies, Hikvision creates a safer and smarter environment on and off campus.">Advanced AloT প্রযুক্তি ব্যবহার করে ক্যাম্পাসে একটি নিরাপদ ও স্মার্ট পরিবেশ।</p>
+    </div>
+    <div class="security-grid reveal">
+      <div class="security-card">
+        <div class="sc-icon">🛡️</div>
+        <h4 data-bn="ব্যাপক নিরাপত্তা" data-en="Comprehensive Security">ব্যাপক নিরাপত্তা</h4>
+        <p data-bn="ভিডিও সিকিউরিটিতে ব্লাইন্ড স্পট দূর করুন এবং অপ্রত্যাশিত জরুরি অবস্থায় দ্রুত পদক্ষেপ নিন।" data-en="Eliminate blind spots in video security and take prompt action in unexpected emergencies.">ভিডিও সিকিউরিটিতে ব্লাইন্ড স্পট দূর এবং জরুরি অবস্থায় দ্রুত পদক্ষেপ।</p>
+      </div>
+      <div class="security-card">
+        <div class="sc-icon">⚡</div>
+        <h4 data-bn="দক্ষ ব্যবস্থাপনা" data-en="Efficient Management">দক্ষ ব্যবস্থাপনা</h4>
+        <p data-bn="আলাদা আলাদা সিস্টেমগুলোকে একটি প্ল্যাটফর্মে একত্রিত করুন।" data-en="Centralize separate systems into a single platform.">আলাদা আলাদা সিস্টেমগুলোকে একটি প্ল্যাটফর্মে একত্রিত করুন।</p>
+      </div>
+      <div class="security-card">
+        <div class="sc-icon">📚</div>
+        <h4 data-bn="শিক্ষার পরিবেশ" data-en="Learning Environment">শিক্ষার পরিবেশ</h4>
+        <p data-bn="ইন-পার্সন ও রিমোট উভয় শিক্ষার্থীর চাহিদা পূরণ করুন। ক্লাসরুম ইন্টারেক্টিভিটি বাড়ান।" data-en="Meet learning needs for both in-person and remote students. Improve classroom interactivity.">ইন-পার্সন ও রিমোট উভয় শিক্ষার্থীর চাহিদা পূরণ। ক্লাসরুম ইন্টারেক্টিভিটি বাড়ান।</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1.25rem" class="reveal">
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🚌</div><h4 data-bn="স্কুল বাস" data-en="School Bus">স্কুল বাস</h4></div>
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🚧</div><h4 data-bn="পেরিমিটার" data-en="Perimeter">পেরিমিটার</h4></div>
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🚪</div><h4 data-bn="স্কুল গেট" data-en="School Gate">স্কুল গেট</h4></div>
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🏫</div><h4 data-bn="ক্যাম্পাস" data-en="Campus">ক্যাম্পাস</h4></div>
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🎛️</div><h4 data-bn="কন্ট্রোল রুম" data-en="Control Room">কন্ট্রোল রুম</h4></div>
+      <div class="security-card" style="text-align:center"><div class="sc-icon">🏛️</div><h4 data-bn="ক্লাসরুম" data-en="Classroom">ক্লাসরুম</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="কর্পোরেট পার্টনার" data-en="Corporate Partners">কর্পোরেট পার্টনার</div>
+      <h2 class="section-title" data-bn="আমাদের <span class='accent'>পার্টনার</span>" data-en="Our <span class='accent'>Partners</span>">আমাদের <span class="accent">পার্টনার</span></h2>
+    </div>
+    <div class="partners-grid reveal">
+      <div class="partner-card"><div class="p-icon">🔴</div><h5>Hikvision</h5><p data-bn="নিরাপত্তা সরঞ্জাম" data-en="Security hardware">নিরাপত্তা সরঞ্জাম</p></div>
+      <div class="partner-card"><div class="p-icon">🏦</div><h5 data-bn="সোনালী ব্যাংক" data-en="Sonali Bank">সোনালী ব্যাংক</h5><p data-bn="ব্যাংকিং পার্টনার" data-en="Banking partner">ব্যাংকিং পার্টনার</p></div>
+      <div class="partner-card"><div class="p-icon">📱</div><h5>বিকাশ</h5><p data-bn="মোবাইল পেমেন্ট" data-en="Mobile payment">মোবাইল পেমেন্ট</p></div>
+      <div class="partner-card"><div class="p-icon">💵</div><h5>নগদ</h5><p data-bn="ডিজিটাল লেনদেন" data-en="Digital transaction">ডিজিটাল লেনদেন</p></div>
+      <div class="partner-card"><div class="p-icon">⭐</div><h5>aamarPay</h5><p data-bn="পেমেন্ট গেটওয়ে" data-en="Payment gateway">পেমেন্ট গেটওয়ে</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section id="docs">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-bn="কোম্পানি ডকুমেন্টেশন" data-en="Company Documentation">কোম্পানি ডকুমেন্টেশন</div>
+      <h2 class="section-title" data-bn="যাচাইকৃত <span class='accent'>প্রতিষ্ঠান</span>" data-en="Verified <span class='accent'>Institution</span>">যাচাইকৃত <span class="accent">প্রতিষ্ঠান</span></h2>
+    </div>
+    <div class="docs-grid reveal">
+      <div class="doc-card">
+        <div class="doc-icon">📜</div>
+        <h4>Incorporation Certificate</h4>
+        <p>No. C-193781/2024</p>
+        <div class="verified-badge">✓ VERIFIED</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">🏪</div>
+        <h4>Trade License</h4>
+        <p>TRAD/DNCC/041137/2023</p>
+        <div class="verified-badge">✓ VERIFIED</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">🧾</div>
+        <h4>TIN Certificate</h4>
+        <p>TIN: 121621590913</p>
+        <div class="verified-badge">✓ VERIFIED</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">💼</div>
+        <h4>BIN / VAT Certificate</h4>
+        <p>BIN: 006223133-0101</p>
+        <div class="verified-badge">✓ VERIFIED</div>
+      </div>
+    </div>
+    <div style="margin-top:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem" class="reveal">
+      <h4 style="margin-bottom:0.5rem;font-size:0.9rem" data-bn="নিবন্ধিত ঠিকানা" data-en="Registered Address">নিবন্ধিত ঠিকানা</h4>
+      <p style="color:var(--muted);font-size:0.85rem" data-bn="House No: 8, Road: 17/A, Block-E, Banani, Dhaka-1213, Bangladesh" data-en="House No: 8, Road: 17/A, Block-E, Banani, Dhaka-1213, Bangladesh">House No: 8, Road: 17/A, Block-E, Banani, Dhaka-1213, Bangladesh</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing">
+  <div class="closing-bg"></div>
+  <h2 class="closing-title reveal">
+    THANK<br>
+    <span class="line2">YOU.</span>
+  </h2>
+  <p class="closing-name reveal" data-bn="হাসান মাহমুদ — ম্যানেজিং ডিরেক্টর, Smart Soft Limited" data-en="Hasan Mahmud — Managing Director, Smart Soft Limited">হাসান মাহমুদ — ম্যানেজিং ডিরেক্টর, Smart Soft Limited</p>
+  <div class="closing-contact reveal">
+    <a href="https://www.facebook.com/mahmudzohan" target="_blank" class="closing-link">📘 Facebook</a>
+    <a href="https://wa.me/8801725713675" target="_blank" class="closing-link">💬 WhatsApp: 01725-713675</a>
+    <a href="https://smartsoft.bd/" target="_blank" class="closing-link">🌐 smartsoft.bd</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Smart Soft Limited · Shikkhaloy Education System · Innovation in Every Step</p>
+</footer>
+
+<script>
+// ── LANG TOGGLE ──────────────────────────────────────────
+const langBtn = document.getElementById('langToggle');
+let lang = 'bn';
+function setLang(l) {
+  lang = l;
+  document.documentElement.setAttribute('data-lang', l);
+  langBtn.textContent = l === 'bn' ? 'EN' : 'বাং';
+  document.querySelectorAll('[data-bn][data-en]').forEach(el => {
+    const val = el.getAttribute('data-' + l);
+    if (val) el.innerHTML = val;
+  });
+}
+langBtn.addEventListener('click', () => setLang(lang === 'bn' ? 'en' : 'bn'));
+
+// ── THEME TOGGLE ─────────────────────────────────────────
+const themeBtn = document.getElementById('themeToggle');
+let dark = true;
+themeBtn.addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+});
+
+// ── SCROLL REVEAL ────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// ── DASHBOARD BARS ───────────────────────────────────────
+const heights = [40,65,50,80,55,90,70,85,60,75,95,68];
+const chart = document.getElementById('dbChart');
+if (chart) {
+  heights.forEach(h => {
+    const bar = document.createElement('div');
+    bar.className = 'db-bar';
+    bar.style.height = h + '%';
+    chart.appendChild(bar);
+  });
+}
+
+// ── ANIMATED COUNTERS ────────────────────────────────────
+function animateCounter(el, target, suffix='') {
+  if (!el) return;
+  let start = 0;
+  const dur = 1800;
+  const step = target / (dur / 16);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start).toLocaleString() + suffix;
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(document.getElementById('animStudents'), 9825, '+');
+      animateCounter(document.getElementById('animTeachers'), 653, '+');
+      animateCounter(document.getElementById('animAttend'), 19825, '+');
+      animateCounter(document.getElementById('animTeachAtt'), 553, '+');
+      counterObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const pdEl = document.querySelector('.pro-dashboard');
+if (pdEl) counterObs.observe(pdEl);
+
+// ── LINE CHART ───────────────────────────────────────────
+const lineChartEl = document.getElementById('pdLineChart');
+if (lineChartEl) {
+  const pts1 = [20,40,30,65,50,80,55,90,60,85,95,70];
+  const pts2 = [10,20,15,30,25,40,30,45,35,42,50,38];
+  const w = 400, h = 60;
+  const xStep = w / (pts1.length - 1);
+  const toPath = (pts) => pts.map((v,i) => `${i===0?'M':'L'}${i*xStep},${h - (v/100)*h}`).join(' ');
+  lineChartEl.innerHTML = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4ade80" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="${toPath(pts1)} V${h} H0 Z" fill="url(#g1)"/>
+    <path d="${toPath(pts1)}" fill="none" stroke="#4ade80" stroke-width="2"/>
+    <path d="${toPath(pts2)}" fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--gold').trim()}" stroke-width="1.5" stroke-dasharray="4 2"/>
+  </svg>`;
+}
+
+// ── TEMPLATE SWITCHER ─────────────────────────────────────
+const tplData = {
+  school: {
+    navBg:'#1a3a7a', logo:'🏫 স্কুল পোর্টাল', name:'Model Government High School',
+    sub:'Dhaka, Bangladesh', btnColor:'#FF3A5C', students:'2,500+'
+  },
+  college: {
+    navBg:'#1a5c3a', logo:'🎓 কলেজ পোর্টাল', name:'Govt. Begum Rokeya College, Rangpur',
+    sub:'Rangpur, Bangladesh', btnColor:'#00C4B4', students:'5,200+'
+  },
+  madrasa: {
+    navBg:'#3d1a00', logo:'🕌 মাদ্রাসা পোর্টাল', name:'তামিরুল মিল্লাত কামিল মাদ্রাসা',
+    sub:'Tongi, Gazipur-1712', btnColor:'#F0A500', students:'3,800+'
+  }
+};
+function switchTpl(btn, key) {
+  document.querySelectorAll('.tsd-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const d = tplData[key];
+  document.getElementById('tplNav').style.background = d.navBg;
+  document.getElementById('tplLogo').textContent = d.logo;
+  document.getElementById('tplName').textContent = d.name;
+  document.getElementById('tplSub').textContent = d.sub;
+  document.getElementById('tplBtn1').style.background = d.btnColor;
+  document.getElementById('tplS1').textContent = d.students;
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) cur = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--text)' : '';
+    a.style.background = a.getAttribute('href') === '#' + cur ? 'var(--surface)' : '';
+  });
+}, { passive: true });
+</script>
+
+</body>
+</html>
